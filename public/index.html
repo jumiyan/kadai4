@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--https://firebase.google.com/docs/auth/web/firebaseui?hl=ja-->
+    <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+    
+    <script src="https://www.gstatic.com/firebasejs/9.3.0/firebase-app-compat.js"></script>
+    <script src="http://www.gstatic.com/firebasejs/9.3.0/firebase-auth-compat.js"></script>
+    
+    <title>Document</title>
+</head>
+<body>
+
+    <p>Hello👋
+      <br>test@test.com has been registered; pass = testest
+    </p>
+    <div id="firebaseui-auth-container"></div>
+    <div id="loader">Loading...</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script type = "module">
+   
+    //import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, EmailAuthProvider, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-auth-compat.js";
+
+//注: FirebaseUI は v9 モジュラー SDK と互換性がありません。
+//v9 互換レイヤー（特に app-compat および auth-compat パッケージ）では、v9 とともに FirebaseUI を使用できますが、その場合、アプリのサイズ削減などの v9 SDK のメリットを得ることはできません。
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const config = {
+  apiKey: "***********************************",
+  authDomain: "*******************************",
+  databaseURL: "******************************",
+  projectId: "********************************",
+  storageBucket: "****************************",
+  messagingSenderId: "************************",
+  appId: "************************************"
+};
+// Initialize Firebase
+firebase.initializeApp(config);
+
+const auth = firebase.auth();
+//Firebase Authの接続先をエミュレータに変更
+auth.useEmulator("http://localhost:9099");
+
+
+
+//const auth = getAuth();
+/*
+    //サインイン
+
+createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+*/
+
+/*
+//ログイン
+const auth = getAuth();
+signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+*/
+
+    // Initialize the FirebaseUI Widget using Firebase.
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+    var uiConfig = {
+        callbacks: {
+            signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+                return true;
+            },
+            uiShown: function() {
+                document.getElementById('loader').style.display = 'none';
+            }
+        },
+        signInFlow: 'popup',
+        signInSuccessUrl: './success.html',
+        signInOptions: [
+            //GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            //firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        ],
+    };
+    ui.start('#firebaseui-auth-container', uiConfig);
+
+  /*  
+const provider = new firebase.auth.GoogleAuthProvider()
+await app.auth().signInWithPopup(provider)
+*/
+</script>
+</body>
+</html>
