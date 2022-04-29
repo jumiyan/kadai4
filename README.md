@@ -5,7 +5,7 @@ LINE風の画面は講義とほぼ変わっていないのですが，ベタにF
 
 ②工夫した点・こだわった点
 firebaseUIを使用したのと，Emulatorを使ってみたかったので動かしてみました。
-※Firebase Authの接続先がエミュレータ指定になっておりますのでご注意ください。
+※Hostingせず，Firebase Authの接続先がエミュレータ指定になっておりますのでご注意ください。
 使用しているのはAUTHのみなので，firebase initでemulatorを使えるようにしたあと
   firebase emulators:start --only auth
 で良いです。
